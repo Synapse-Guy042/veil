@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>veil.cc - Mod Menu</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body, html {
+      height: 100%;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #0a0a1a;
+      color: white;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    #particles-js {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 25px 60px;
+      background: transparent;
+      position: relative;
+      z-index: 2;
+    }
+
+    .navbar .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #b983ff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .navbar .logo .detective-icon {
+      color: #a64bf4;
+      filter: drop-shadow(0 0 4px #c27cff);
+      font-size: 28px;
+    }
+
+    .navbar nav a {
+      margin-left: 25px;
+      color: #ccc;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .navbar nav a:hover {
+      color: #c27cff;
+    }
+
+    .get-started {
+      background: #a64bf4;
+      padding: 10px 18px;
+      border-radius: 8px;
+      color: #fff;
+      font-weight: bold;
+      margin-left: 30px;
+      box-shadow: 0 0 15px #a64bf4;
+      transition: all 0.3s;
+    }
+
+    .get-started:hover {
+      background: #c27cff;
+      box-shadow: 0 0 25px #c27cff;
+      transform: scale(1.05);
+    }
+
+    .hero {
+      text-align: left;
+      padding: 100px 100px;
+      max-width: 800px;
+      z-index: 2;
+      position: relative;
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(162, 108, 255, 0.2);
+      color: #c27cff;
+      padding: 5px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      margin-bottom: 20px;
+      font-weight: bold;
+    }
+
+    .hero h1 {
+      font-size: 48px;
+      color: #fff;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .hero h1 span {
+      color: #a64bf4;
+    }
+
+    .hero p {
+      color: #ccc;
+      font-size: 18px;
+      margin-bottom: 30px;
+      line-height: 1.5;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 20px;
+    }
+
+    .hero-buttons .primary {
+      background: #a64bf4;
+      padding: 12px 24px;
+      border-radius: 8px;
+      color: white;
+      font-weight: bold;
+      box-shadow: 0 0 15px #a64bf4;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .hero-buttons .primary:hover {
+      background: #c27cff;
+      box-shadow: 0 0 25px #c27cff;
+      transform: scale(1.05);
+    }
+
+    .hero-buttons .secondary {
+      background: transparent;
+      padding: 12px 24px;
+      border-radius: 8px;
+      border: 1px solid #666;
+      color: #ccc;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .hero-buttons .secondary:hover {
+      color: #fff;
+      border-color: #c27cff;
+      transform: scale(1.05);
+    }
+
+    .footer-note {
+      margin-top: 30px;
+      font-size: 14px;
+      color: #999;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .footer-note .detective-icon {
+      color: #a64bf4;
+      filter: drop-shadow(0 0 4px #a64bf4);
+      font-size: 18px;
+      vertical-align: middle;
+    }
+
+    #features {
+      margin-top: 150px;
+      padding: 60px 60px 100px;
+      position: relative;
+      z-index: 1;
+    }
+
+    #features h2 {
+      color: #c27cff;
+      font-size: 36px;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    #features p {
+      color: #ccc;
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 40px auto;
+      font-size: 16px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      padding: 0 20px;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .feature-card {
+      background: #141424;
+      border-radius: 16px;
+      padding: 30px;
+      color: white;
+      box-shadow: 0 0 12px rgba(162, 108, 255, 0.2);
+      transition: transform 0.3s, box-shadow 0.3s;
+      text-align: left;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 25px rgba(162, 108, 255, 0.4);
+    }
+
+    .feature-icon {
+      background: #431c79;
+      border-radius: 12px;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+    }
+
+    .feature-icon i {
+      color: #a64bf4;
+      font-size: 20px;
+    }
+
+    .feature-card h3 {
+      margin-bottom: 10px;
+      font-size: 18px;
+    }
+
+    .feature-card p {
+      color: #aaa;
+      font-size: 15px;
+      line-height: 1.4;
+    }
+
+    #faq {
+      margin: 100px 60px 100px;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    #faq h2 {
+      color: #c27cff;
+      font-size: 36px;
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .faq-item {
+      background: #141424;
+      margin-bottom: 20px;
+      border-radius: 12px;
+      padding: 20px 25px;
+      cursor: pointer;
+      box-shadow: 0 0 12px rgba(162, 108, 255, 0.2);
+      transition: background 0.3s ease;
+    }
+
+    .faq-item.active {
+      background: #2e1a70;
+    }
+
+    .faq-question {
+      font-weight: 600;
+      font-size: 18px;
+      color: #c27cff;
+      user-select: none;
+    }
+
+    .faq-answer {
+      margin-top: 12px;
+      color: #ccc;
+      font-size: 16px;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, padding 0.3s ease;
+      padding: 0 0;
+    }
+
+    .faq-item.active .faq-answer {
+      max-height: 500px;
+      padding-top: 12px;
+    }
+
+    @media (max-width: 768px) {
+      .hero {
+        padding: 80px 20px;
+      }
+
+      .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 20px;
+      }
+
+      .hero h1 {
+        font-size: 36px;
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+
+      #faq {
+        margin: 50px 20px 100px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="particles-js"></div>
+
+  <div class="navbar">
+    <div class="logo">
+      <i class="fas fa-user-secret detective-icon"></i> veil.cc
+    </div>
+    <nav>
+      <a href="#features">Features</a>
+      <a href="#faq">FAQ</a>
+      <a class="get-started" href="https://discord.gg/AH8jkMVzBS" target="_blank" rel="noopener noreferrer">Join Discord!</a>
+    </nav>
+  </div>
+
+  <section class="hero">
+    <div class="badge"><i class="fas fa-shield-alt"></i> Undetected & Secure</div>
+    <h1><span>Veil</span><br />The only modding server you'll need!</h1>
+    <p>Gain tons of overpowered mods for multiple different games with a wide range of customizability and undetectable cheats with veil.cc</p>
+    <div class="hero-buttons">
+      <button class="primary" onclick="window.open('https://discord.gg/AH8jkMVzBS', '_blank', 'noopener')">Start Now!</button>
+      <button class="secondary" onclick="document.getElementById('features').scrollIntoView({behavior: 'smooth'})">Explore Features</button>
+    </div>
+    <div class="footer-note">
+      <i class="fas fa-user-secret detective-icon"></i> Join tons of other players using Veil
+    </div>
+  </section>
+
+  <section id="features">
+    <h2>Overpowered Features</h2>
+    <p>Our cheat menu comes loaded with cutting-edge features designed to give you the ultimate advantage in any game.</p>
+    <div class="features-grid">
+      <div class="feature-card"><div class="feature-icon"><i class="fas fa-fire"></i></div><h3>OP Mods</h3><p>Powerful mods like lag all while still being stealthy.</p></div>
+      <div class="feature-card"><div class="feature-icon"><i class="fas fa-shield-alt"></i></div><h3>Top Notch Security</h3><p>Powerful obfuscation, security, and no memory leaks.</p></div>
+      <div class="feature-card"><div class="feature-icon"><i class="fas fa-bars"></i></div><h3>Clean Menu Design</h3><p>Amazing menu design and easy to navigate.</p></div>
+      <div class="feature-card"><div class="feature-icon"><i class="fas fa-user-shield"></i></div><h3>Ban & Report Protection</h3><p>We keep our mods as undetected as possible and are always testing.</p></div>
+      <div class="feature-card"><div class="feature-icon"><i class="fas fa-sync-alt"></i></div><h3>Frequent Updates</h3><p>We keep our menu up to date for every Gorilla Tag update and provide live support!</p></div>
+      <div class="feature-card"><div class="feature-icon"><i class="fas fa-sliders-h"></i></div><h3>Customization</h3><p>We have great customization for the menu to match your preferences.</p></div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <h2>FAQ</h2>
+    <div class="faq-item"><div class="faq-question">Is veil.cc safe to use?</div><div class="faq-answer">Yes! We do not give our members RATs nor any other malware.</div></div>
+    <div class="faq-item"><div class="faq-question">How often is it updated?</div><div class="faq-answer">We update our software very frequently, especially after game patches or anti-cheat updates.</div></div>
+    <div class="faq-item"><div class="faq-question">Does it cause lag spikes?</div><div class="faq-answer">No, Veil does not cause any lag we carefully test to make sure you have a great lag free experience!</div></div>
+    <div class="faq-item"><div class="faq-question">Is there a free version?</div><div class="faq-answer">Yes there will be a free version soon but right now we mainly focus on our paid menu! Which is 10x more OP</div></div>
+  </section>
+
+<!-- Inside the same full HTML page, right after the Features section -->
+<section id="pricing" style="padding: 80px 60px; background: #0f0f1e; position: relative; z-index: 1;">
+  <h2 style="color: #c27cff; font-size: 36px; text-align: center; margin-bottom: 20px;">Pricing Plans</h2>
+  <p style="color: #ccc; text-align: center; max-width: 700px; margin: 0 auto 50px; font-size: 16px;">
+    Choose any Mod that fits your needs and start modding 'better' today with veil!
+  </p>
+  <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 30px; max-width: 1000px; margin: auto;">
+    <!-- Free Plan -->
+    <div style="background: #141424; border-radius: 16px; padding: 30px; color: white; box-shadow: 0 0 12px rgba(162, 108, 255, 0.2); width: 280px; text-align: center;">
+      <h3 style="font-size: 22px; color: #a64bf4;">Free Menu</h3>
+      <p style="font-size: 32px; margin: 15px 0;"><strong>$0</strong></p>
+      <ul style="list-style: none; padding: 0; color: #aaa; margin-bottom: 20px;">
+        <li>✓ Basic Mod Menu</li>
+        <li>✓ Limited Features</li>
+        <li>✗ Not Fully Undetected</li>
+        <li>✗ No Overpowered Mods</li>
+      </ul>
+      <a href="https://discord.gg/AH8jkMVzBS" target="_blank" style="background: transparent; border: 1px solid #666; color: #ccc; padding: 10px 20px; border-radius: 8px; text-decoration: none; display: inline-block; transition: 0.3s;">Not Released</a>
+    </div>
+    <!-- Premium Plan -->
+    <div style="background: #1c1c38; border-radius: 16px; padding: 30px; color: white; box-shadow: 0 0 15px rgba(198, 108, 255, 0.4); width: 280px; text-align: center; border: 2px solid #c27cff;">
+      <h3 style="font-size: 22px; color: #c27cff;">Gorilla Tag Executer</h3>
+      <p style="font-size: 32px; margin: 15px 0;"><strong>$15.00</strong></p>
+      <ul style="list-style: none; padding: 0; color: #aaa; margin-bottom: 20px;">
+       <li style= color: #a64bf4;">✅ Best Seller ✅</li>
+        <li> -------- </li>
+        <li>✓ FUD By Anti-Cheat</li>
+        <li>✓ Fast Execution</li>
+        <li>✓ No Lag-Spike</li>
+        <li>✓ 24/7 Support</li>
+      </ul>
+      <a href="https://veil-cc.mysellauth.com/product/veilcc-gorilla-tag-executer" target="_blank" style="background: #a64bf4; padding: 10px 20px; border-radius: 8px; color: white; text-decoration: none; display: inline-block; box-shadow: 0 0 10px #a64bf4; transition: 0.3s;">Purchase Now</a>
+    </div>
+    <!-- Lifetime Plan -->
+    <div style="background: #141424; border-radius: 16px; padding: 30px; color: white; box-shadow: 0 0 12px rgba(162, 108, 255, 0.2); width: 280px; text-align: center;">
+      <h3 style="font-size: 22px; color: #a64bf4;">Paid Menu</h3>
+      <p style="font-size: 32px; margin: 15px 0;"><strong>$10.00</strong></p>
+      <ul style="list-style: none; padding: 0; color: #aaa; margin-bottom: 20px;">
+        <li>✓ BEST Version</li>
+        <li>✓ Fully Undetected Mods</li>
+        <li>✓ Great Customization</li>
+        <li>✓ REALLY OP Mods</li>
+      </ul>
+      <a href="https://veil-cc.mysellauth.com/product/veilcc-mod-menu" target="_blank" style="background: transparent; border: 1px solid #666; color: #ccc; padding: 10px 20px; border-radius: 8px; text-decoration: none; display: inline-block; transition: 0.3s;">Purchase Now</a>
+    </div>
+  </div>
+</section>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <script>
+    particlesJS('particles-js', {
+      particles: {
+        number: { value: 80 },
+        size: { value: 3 },
+        move: {
+          enable: true,
+          speed: 0.6,
+          direction: 'none',
+          random: true,
+        },
+        opacity: {
+          value: 0.5,
+          anim: {
+            enable: true,
+            speed: 1,
+            opacity_min: 0.1,
+          },
+        },
+        line_linked: { enable: false },
+      },
+    });
+
+    document.querySelectorAll('.faq-question').forEach((q) => {
+      q.addEventListener('click', () => {
+        const parent = q.parentElement;
+        parent.classList.toggle('active');
+      });
+    });
+  </script>
+</body>
+</html>
